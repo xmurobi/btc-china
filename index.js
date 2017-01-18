@@ -12,6 +12,7 @@ var BTCChina = function BTCChina(key, secret, server, timeout)
     this.secret = secret;
 
     this.server = server || 'https://api.btcchina.com';
+    this.data = 'https://data.btcchina.com';
 
     this.timeout = timeout || 30000;
 };
@@ -92,18 +93,7 @@ BTCChina.prototype.publicRequest = function(method, params, callback)
 
     var headers = {"User-Agent": "BTC China Javascript API Client"};
 
-    // TODO need a better way of handling trades using a different API
-    // note the doco says ticker and order book should use https://data.btcchina.com but it doesn't work
-    // support have advised ticket and order book need to use 'https://api.btcchina.com'
-    var url;
-    if (method === 'trades')
-    {
-        url = 'https://data.btcchina.com/data/' + method;
-    }
-    else
-    {
-        url = this.server + '/data/' + method;
-    }
+    var url = this.data + '/data/' + method;
 
     var options = {
         url: url,
